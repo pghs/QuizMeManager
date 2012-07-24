@@ -82,7 +82,11 @@ class QuestionsController < ApplicationController
   end
 
   def export_all_question_data
-    @questions = Question.all
+    @questions = Rails.cache.read("questions:export:all")
+    unless @questions
+      @questions = Question.all
+      Rails.cache.write("questions:export:all", @questions, :timeToLive => 3600.seconds)
+    end
     respond_to :json
   end
 end
