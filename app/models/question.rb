@@ -18,7 +18,9 @@ class Question < ActiveRecord::Base
 
     q = questions.sample
     queue = []
-    while queue.size < current_acct.posts_per_day
+    queue = questions if questions.size < current_acct.posts_per_day
+    i = 0
+    while queue.size < current_acct.posts_per_day and i < (questions.size*2)
       if q.is_tweetable? && !queue.include?(q)
         puts 'added'
         queue << q
@@ -27,7 +29,9 @@ class Question < ActiveRecord::Base
         puts 'finding new q'
         q = questions.sample
       end
+      i+=1
     end
+    puts "WARNING THE QUEUE FOR #{current_acct.twi_screen_name} WAS NOT FULLY FILLED. ONLY #{queue.size} of #{current_acct.posts_per_day} POSTS SCHEDULED"
     PostQueue.enqueue_questions(current_acct, queue)
   end
 
