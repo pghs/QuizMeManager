@@ -80,4 +80,9 @@ class QuestionsController < ApplicationController
       format.json { head :ok }
     end
   end
+
+  def export_all_question_data
+    @questions = Question.all
+    respond_to :json
+  end
 end

@@ -6,6 +6,7 @@ Quizmemanager::Application.routes.draw do
   match "accounts/:id/scores" => "mentions#scores"
   match 'accounts/:id/stats' => 'accounts#stats'
   match 'accounts/:id/rts' => 'accounts#rts'
+  match 'questions/export_all_question_data' => 'questions#export_all_question_data'
 
   resources :accounts
   resources :users

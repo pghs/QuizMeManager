@@ -31,7 +31,7 @@ class Question < ActiveRecord::Base
       end
       i+=1
     end
-    puts "WARNING THE QUEUE FOR #{current_acct.twi_screen_name} WAS NOT FULLY FILLED. ONLY #{queue.size} of #{current_acct.posts_per_day} POSTS SCHEDULED"
+    puts "WARNING THE QUEUE FOR #{current_acct.twi_screen_name} WAS NOT FULLY FILLED. ONLY #{queue.size} of #{current_acct.posts_per_day} POSTS SCHEDULED" if queue.size < current_acct.posts_per_day
     PostQueue.enqueue_questions(current_acct, queue)
   end
 
